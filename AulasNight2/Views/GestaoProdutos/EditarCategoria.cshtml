@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Editar Categorias";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Editar Categorias</h1>
+</div>
+<br />
+
+<form>
+
+    <div class="form-group">
+        <label for="Produto">Categoria</label>
+        <input type="text" class="form-control" placeholder="Insira o nome da categoria">
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-secondary">Guardar</button>
+    <a class="btn btn-primary" asp-controller="GestaoProdutos" asp-action="Categorias" role="button">Voltar</a>
+
+</form>

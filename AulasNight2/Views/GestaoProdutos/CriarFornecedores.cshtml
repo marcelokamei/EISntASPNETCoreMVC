@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Criar Fornecedores";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Criar Fornecedores</h1>
+</div>
+<br />
+
+<form asp-controller="GestaoProdutos" asp-action="Criar" method="post">
+    <div class="form-group">
+        <label for="fornecedor">Fornecedor</label>
+        <input type="text" class="form-control" placeholder="Insira o nome do fornecedor">
+    </div>
+    <div class="form-group">
+        <label for="Morada">Morada</label>
+        <input type="text" class="form-control" placeholder="Insira a morada do fornecedor">
+    </div>
+    <div class="form-group">
+        <label for="E-mail">E-mail</label>
+        <input type="text" class="form-control" placeholder="Insira o e-mail do fornecedor">
+    </div>
+    <div class="form-group">
+        <label for="Telefone">Telefone</label>
+        <input type="text" class="form-control" placeholder="Insira o telefone do fornecedor">
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-secondary">Guardar</button>
+    <a class="btn btn-primary" asp-controller="GestaoProdutos" asp-action="Fornecedores" role="button">Voltar</a>
+
+</form>
