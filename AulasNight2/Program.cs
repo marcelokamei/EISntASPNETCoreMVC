@@ -1,7 +1,11 @@
+using AulasNight2.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<BancoContexto>(options => options.UseMySQL("Server=127.0.0.1;DataBase=GestaoProdutos;Uid=root;Pwd=kameiSQL"));
 
 var app = builder.Build();
 
