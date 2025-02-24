@@ -1,14 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AulasNight2.Models;
+using AulasNight2.Repositorio;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AulasNight2.Controllers
 {
     public class GestaoProdutosController : Controller
     {
+        //--- INJEÇÃO DE DEPENDÊNCIA
+        private readonly IRepositorioProdutos _produtoRepositorio;
+        private readonly IRepositorioFornecedor _fornecedorRepositorio;
+        private readonly IRepositorioCategoria _categoriaRepositorio;
+
+        public GestaoProdutosController(IRepositorioProdutos produtoRepositorio, IRepositorioFornecedor fornecedorRepositorio, IRepositorioCategoria categoriaRepositorio)
+        {
+            _produtoRepositorio = produtoRepositorio;
+            _fornecedorRepositorio = fornecedorRepositorio;
+            _categoriaRepositorio = categoriaRepositorio;
+        }
 
         //--- AÇÕES RELACIONADAS AOS PRODUTOS
         public IActionResult Index()
         {
-            return View();
+            List<ProdutosModel> produtos = _produtoRepositorio.ObterTodosProdutos();
+            return View(produtos);
         }
 
         public IActionResult Criar()
@@ -16,9 +30,10 @@ namespace AulasNight2.Controllers
             return View();
         }
 
-        public IActionResult Editar()
+        public IActionResult Editar(int Id)
         {
-            return View();
+            ProdutosModel produto = _produtoRepositorio.ListarPorId(Id);
+            return View(produto);
         }
 
         public IActionResult ApagarConfirmacao()
@@ -26,12 +41,11 @@ namespace AulasNight2.Controllers
             return View();
         }
 
-
-
         //--- AÇÕES RELACIONADAS ÀS CATEGORIAS
         public IActionResult Categorias()
         {
-            return View();
+            List<CategoriaModel> categorias = _categoriaRepositorio.ObterTodasCategoria();
+            return View(categorias);
         }
 
         public IActionResult CriarCategoria()
@@ -39,16 +53,17 @@ namespace AulasNight2.Controllers
             return View();
         }
 
-        public IActionResult EditarCategoria()
+        public IActionResult EditarCategoria(int Id)
         {
-            return View();
+            CategoriaModel categoria = _categoriaRepositorio.ListarPorId(Id);
+            return View(categoria);
         }
-
 
         //--- AÇÕES RELACIONADAS AOS FORNECEDORES
         public IActionResult Fornecedores()
         {
-            return View();
+            List<FornecedorModel> fornecedores = _fornecedorRepositorio.ObterTodosFornecedores();
+            return View(fornecedores);
         }
 
         public IActionResult CriarFornecedores()
@@ -56,10 +71,54 @@ namespace AulasNight2.Controllers
             return View();
         }
 
-        public IActionResult EditarFornecedor()
+        public IActionResult EditarFornecedor(int Id)
         {
-            return View();
+            FornecedorModel fornecedor = _fornecedorRepositorio.ListarPorId(Id);
+            return View(fornecedor);
         }
 
+        //--- MÉTODOS POST PRODUTOS
+        [HttpPost]
+        public IActionResult Criar(ProdutosModel novoProduto)
+        {
+            _produtoRepositorio.Adicionar(novoProduto);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Alterar(ProdutosModel produtoAlterado)
+        {
+            _produtoRepositorio.Alterar(produtoAlterado);
+            return RedirectToAction("Index");
+        }
+
+        //--- MÉTODOS POST CATEGORIAS
+        [HttpPost]
+        public IActionResult CriarCategoria(CategoriaModel novaCategoria)
+        {
+            _categoriaRepositorio.Adicionar(novaCategoria);
+            return RedirectToAction("Categorias");
+        }
+        [HttpPost]
+        public IActionResult AlterarCategoria(CategoriaModel categoriaAlterada)
+        {
+            _categoriaRepositorio.Alterar(categoriaAlterada);
+            return RedirectToAction("Categorias");
+        }
+
+
+        //--- MÉTODOS POST FORNECEDORES
+        [HttpPost]
+        public IActionResult CriarFornecedores(FornecedorModel novoFornecedor)
+        {
+            _fornecedorRepositorio.Adicionar(novoFornecedor);
+            return RedirectToAction("Fornecedores");
+        }
+        [HttpPost]
+        public IActionResult AlterarFornecedor(FornecedorModel fornecedorAlterado)
+        {
+            _fornecedorRepositorio.Alterar(fornecedorAlterado);
+            return RedirectToAction("Fornecedores");
+        }
     }
 }

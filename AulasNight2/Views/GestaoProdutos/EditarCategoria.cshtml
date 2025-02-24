@@ -1,21 +1,22 @@
-﻿@{
-    ViewData["Title"] = "Editar Categorias";
+﻿@model CategoriaModel
+@{
+    ViewData["Title"] = "Editar Categoria";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Editar Categorias</h1>
+    <h1 class="display-4">Editar Categoria</h1>
 </div>
 <br />
 
-<form>
+<form asp-controller="GestaoProdutos" asp-route-id="@Model.Id" asp-action="AlterarCategoria" method="post">
 
     <div class="form-group">
-        <label for="Produto">Categoria</label>
-        <input type="text" class="form-control" placeholder="Insira o nome da categoria">
+        <label for="Nome">Categoria</label>
+        <input type="text" asp-for="Nome" class="form-control" placeholder="Insira o nome da categoria">
     </div>
 
     <br />
-    <button type="submit" class="btn btn-secondary">Guardar</button>
+    <button type="submit" class="btn btn-secondary">Alterar</button>
     <a class="btn btn-primary" asp-controller="GestaoProdutos" asp-action="Categorias" role="button">Voltar</a>
 
 </form>

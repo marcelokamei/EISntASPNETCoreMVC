@@ -1,4 +1,5 @@
 using AulasNight2.Data;
+using AulasNight2.Repositorio;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BancoContexto>(options => options.UseMySQL("Server=127.0.0.1;DataBase=GestaoProdutos;Uid=root;Pwd=kameiSQL"));
+builder.Services.AddScoped<IRepositorioProdutos, RepositorioProdutos>();
+builder.Services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
+builder.Services.AddScoped<IRepositorioFornecedor, RepositorioFornecedor>();
 
 var app = builder.Build();
 
@@ -26,6 +30,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=GestaoProdutos}/{action=Index}/{id?}");
 
 app.Run();
