@@ -24,12 +24,13 @@ namespace AulasNight2.Repositorio
         public CategoriaModel Alterar(CategoriaModel categoria)
         {
 
-            if (string.IsNullOrEmpty(categoria.Nome))
-            {
-                throw new ArgumentException("O nome da categoria não pode ser nula ou vazia.", nameof(categoria.Nome));
-            }
+            if (categoria == null || categoria.Id == 0) throw new ArgumentException("Categoria inválida");
 
-            _bancoContexto.Categorias.Update(categoria);
+            CategoriaModel categoriaDB = _bancoContexto.Categorias.Find(categoria.Id);
+
+            if (categoriaDB == null) throw new KeyNotFoundException("Categoria não encontrada");
+
+            _bancoContexto.Entry(categoriaDB).CurrentValues.SetValues(categoria);
             _bancoContexto.SaveChanges();
             return categoria;
         }
@@ -42,6 +43,20 @@ namespace AulasNight2.Repositorio
         public List<CategoriaModel> ObterTodasCategoria()
         {
             return _bancoContexto.Categorias.ToList();
+        }
+
+        public CategoriaModel Apagar(CategoriaModel categoria)
+        {
+            if (categoria == null || categoria.Id == 0) throw new ArgumentException("Produto inválido");
+
+            CategoriaModel categoriaDB = _bancoContexto.Categorias.Find(categoria.Id);
+
+            if (categoriaDB == null) throw new KeyNotFoundException("Produto não encontrado");
+
+            _bancoContexto.Categorias.Remove(categoria);
+            _bancoContexto.SaveChanges();
+            return categoria;
+
         }
     }
 }

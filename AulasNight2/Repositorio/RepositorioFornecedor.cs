@@ -25,12 +25,13 @@ namespace AulasNight2.Repositorio
         public FornecedorModel Alterar(FornecedorModel fornecedor)
         {
 
-            if (string.IsNullOrEmpty(fornecedor.Nome))
-            {
-                throw new ArgumentException("O nome do fornecedor não pode ser nula ou vazia.", nameof(fornecedor.Nome));
-            }
+            if (fornecedor == null || fornecedor.Id == 0) throw new ArgumentException("Fornecedor inválido");
 
-            _bancoContexto.Fornecedor.Update(fornecedor);
+            FornecedorModel fornecedorDB = _bancoContexto.Fornecedor.Find(fornecedor.Id);
+
+            if (fornecedorDB == null) throw new KeyNotFoundException("Fornecedor não encontrado");
+
+            _bancoContexto.Entry(fornecedorDB).CurrentValues.SetValues(fornecedor);
             _bancoContexto.SaveChanges();
             return fornecedor;
         }
@@ -43,6 +44,16 @@ namespace AulasNight2.Repositorio
         public List<FornecedorModel> ObterTodosFornecedores()
         {
             return _bancoContexto.Fornecedor.ToList();
+        }
+
+        public FornecedorModel Apagar(FornecedorModel fornecedor)
+        {
+            if (fornecedor == null || fornecedor.Id == 0) throw new ArgumentException("Fornecedor inválido");
+            FornecedorModel fornecedorDB = _bancoContexto.Fornecedor.Find(fornecedor.Id);
+            if (fornecedorDB == null) throw new KeyNotFoundException("Fornecedor não encontrado");
+            _bancoContexto.Fornecedor.Remove(fornecedor);
+            _bancoContexto.SaveChanges();
+            return fornecedor;
         }
 
     }

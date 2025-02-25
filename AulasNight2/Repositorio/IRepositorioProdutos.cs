@@ -10,6 +10,7 @@ namespace AulasNight2.Repositorio
         ProdutosModel Adicionar(ProdutosModel produto);
         ProdutosModel Alterar(ProdutosModel produto);
         ProdutosModel ListarPorId(int Id);
+        ProdutosModel Apagar(ProdutosModel produto);
 
     }
 }

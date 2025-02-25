@@ -1,0 +1,27 @@
+﻿@model CategoriaModel
+@{
+    ViewData["Title"] = "Excluir Categoria";
+}
+
+<div class="text-left">
+    <h4 class="display-4">Deseja apagar o produto: @Model.Nome?</h4>
+    <br />
+    <p></p>
+    <br />
+    <form asp-controller="GestaoProdutos" asp-route-id="@Model.Id" asp-action="ExcluirCategoria" method="post">
+
+        <div class="form-group">
+            <label for="Nome">Categoria</label>
+            <input readonly type="text" asp-for="Nome" class="form-control" placeholder="Insira o nome da categoria">
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-secondary">Excluir</button>
+        <a class="btn btn-primary" asp-controller="GestaoProdutos" asp-action="Categorias" role="button">Voltar</a>
+
+    </form>
+
+
+</div>
+<br />
+

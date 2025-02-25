@@ -47,5 +47,19 @@ namespace AulasNight2.Repositorio
         {
             return _bancoContexto.Produtos.ToList();
         }
+
+        public ProdutosModel Apagar(ProdutosModel produto)
+        {
+            if (produto == null || produto.Id == 0) throw new ArgumentException("Produto inválido");
+
+            ProdutosModel produtoDB = _bancoContexto.Produtos.Find(produto.Id);
+
+            if (produtoDB == null) throw new KeyNotFoundException("Produto não encontrado");
+
+            _bancoContexto.Produtos.Remove(produto);
+            _bancoContexto.SaveChanges();
+            return produto;
+
+        }
     }
 }

@@ -1,0 +1,51 @@
+﻿@model ProdutosModel
+@{
+	ViewData["Title"] = "Apagar";
+}
+
+<div class="text-left">
+    <h4 class="display-4">Deseja apagar o produto: @Model.Produto?</h4>
+	<br />
+	<p></p>
+	<br />
+    <form asp-controller="GestaoProdutos" asp-route-id="@Model.Id" asp-action="Excluir" method="post">
+
+        <div class="form-group">
+            <label for="SKU">SKU</label>
+            <input readonly type="text" asp-for="Sku" class="form-control" placeholder="Insira o SKU do produto">
+        </div>
+        <div class="form-group">
+            <label for="Produto">Produto</label>
+            <input readonly type="text" asp-for="Produto" class="form-control" placeholder="Insira o nome do produto">
+        </div>
+        <div class="form-group">
+            <label for="Descricao">Descrição</label>
+            <input readonly type="text" asp-for="Descricao" class="form-control" placeholder="Insira a descrição do produto">
+        </div>
+        <div class="form-group">
+            <label for="Categoria">Categoria</label>
+            <input readonly type="text" asp-for="Categoria" class="form-control" placeholder="Insira o categoria do produto">
+        </div>
+        <div class="form-group">
+            <label for="Fornecedor">Fornecedor</label>
+            <input readonly type="text" asp-for="Fornecedor" class="form-control" placeholder="Insira o fornecedor do produto">
+        </div>
+
+        <div class="form-group">
+            <label for="Quantidade">Quantidade</label>
+            <input readonly type="text" asp-for="Qtd" class="form-control" placeholder="Insira a categoria do produto">
+        </div>
+        <div class="form-group">
+            <label for="Preco">Preço unitário</label>
+            <input readonly type="text" asp-for="PrecoUnit" class="form-control" placeholder="Insira o preço do produto">
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-secondary">Excluir</button>
+        <a class="btn btn-primary" asp-controller="GestaoProdutos" asp-action="Index" role="button">Voltar</a>
+
+    </form>
+
+
+</div>
+<br />

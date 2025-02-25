@@ -9,6 +9,6 @@ namespace AulasNight2.Repositorio
         FornecedorModel Adicionar(FornecedorModel fornecedor);
         FornecedorModel Alterar(FornecedorModel fornecedor);
         FornecedorModel ListarPorId(int Id);
-
+        FornecedorModel Apagar(FornecedorModel fornecedor);
     }
 }

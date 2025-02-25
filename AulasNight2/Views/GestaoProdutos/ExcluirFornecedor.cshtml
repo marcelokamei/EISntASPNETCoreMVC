@@ -1,0 +1,42 @@
+﻿@model FornecedorModel
+
+@{
+	ViewData["Title"] = "Excluir Fornecedor";
+}
+
+<div class="text-left">
+	<h4 class="display-4">Deseja apagar o fornecedor: @Model.Nome?</h4>
+	<br />
+	<p></p>
+	<br />
+
+	<form asp-controller="GestaoProdutos" asp-route-id="@Model.Id" asp-action="ExcluirFornecedor" method="post">
+
+		<div class="form-group">
+			<label for="nome">Fornecedor</label>
+			<input readonly type="text" asp-for="Nome" class="form-control" placeholder="Insira o nome do fornecedor">
+		</div>
+		<div class="form-group">
+			<label for="nipc">NIPC</label>
+			<input readonly type="text" asp-for="NIPC" class="form-control" placeholder="Insira o NIPC do fornecedor">
+		</div>
+		<div class="form-group">
+			<label for="morada">Morada</label>
+			<input readonly type="text" asp-for="Morada" class="form-control" placeholder="Insira a morada do fornecedor">
+		</div>
+		<div class="form-group">
+			<label for="Telefone">Telefone</label>
+			<input readonly type="text" asp-for="Telefone" class="form-control" placeholder="Insira o telefone do fornecedor">
+		</div>
+		<div class="form-group">
+			<label for="Email">E-mail</label>
+			<input readonly type="text" asp-for="Email" class="form-control" placeholder="Insira o E-mail do fornecedor">
+		</div>
+		<br />
+
+		<br />
+		<button type="submit" class="btn btn-secondary">Excluir</button>
+		<a class="btn btn-primary" asp-controller="GestaoProdutos" asp-action="Fornecedores" role="button">Voltar</a>
+
+	</form>
+</div>

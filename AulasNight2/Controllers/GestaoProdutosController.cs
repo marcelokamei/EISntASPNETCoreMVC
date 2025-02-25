@@ -1,6 +1,7 @@
 ﻿using AulasNight2.Models;
 using AulasNight2.Repositorio;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AulasNight2.Controllers
 {
@@ -36,9 +37,10 @@ namespace AulasNight2.Controllers
             return View(produto);
         }
 
-        public IActionResult ApagarConfirmacao()
+        public IActionResult Excluir(int id)
         {
-            return View();
+            ProdutosModel produto = _produtoRepositorio.ListarPorId(id);
+            return View(produto);
         }
 
         //--- AÇÕES RELACIONADAS ÀS CATEGORIAS
@@ -56,6 +58,11 @@ namespace AulasNight2.Controllers
         public IActionResult EditarCategoria(int Id)
         {
             CategoriaModel categoria = _categoriaRepositorio.ListarPorId(Id);
+            return View(categoria);
+        }
+        public IActionResult ExcluirCategoria(int id)
+        {
+            CategoriaModel categoria = _categoriaRepositorio.ListarPorId(id);
             return View(categoria);
         }
 
@@ -77,6 +84,12 @@ namespace AulasNight2.Controllers
             return View(fornecedor);
         }
 
+        public IActionResult ExcluirFornecedor(int id)
+        {
+            FornecedorModel fornecedor = _fornecedorRepositorio.ListarPorId(id);
+            return View(fornecedor);
+        }
+
         //--- MÉTODOS POST PRODUTOS
         [HttpPost]
         public IActionResult Criar(ProdutosModel novoProduto)
@@ -89,6 +102,14 @@ namespace AulasNight2.Controllers
         public IActionResult Alterar(ProdutosModel produtoAlterado)
         {
             _produtoRepositorio.Alterar(produtoAlterado);
+            return RedirectToAction("Index");
+        }
+        [HttpPost, ActionName("Excluir")]
+        [ValidateAntiForgeryToken]
+        public IActionResult ExcluirConfirmacao(int id)
+        {
+            ProdutosModel produto = _produtoRepositorio.ListarPorId(id);
+            _produtoRepositorio.Apagar(produto);
             return RedirectToAction("Index");
         }
 
@@ -106,6 +127,15 @@ namespace AulasNight2.Controllers
             return RedirectToAction("Categorias");
         }
 
+        [HttpPost, ActionName("ExcluirCategoria")]
+        [ValidateAntiForgeryToken]
+        public IActionResult ExcluirCategoriaConfirmacao(int id)
+        {
+            CategoriaModel categoria = _categoriaRepositorio.ListarPorId(id);
+            _categoriaRepositorio.Apagar(categoria);
+            return RedirectToAction("Categorias");
+        }
+
 
         //--- MÉTODOS POST FORNECEDORES
         [HttpPost]
@@ -118,6 +148,14 @@ namespace AulasNight2.Controllers
         public IActionResult AlterarFornecedor(FornecedorModel fornecedorAlterado)
         {
             _fornecedorRepositorio.Alterar(fornecedorAlterado);
+            return RedirectToAction("Fornecedores");
+        }
+        [HttpPost, ActionName("ExcluirFornecedor")]
+        [ValidateAntiForgeryToken]
+        public IActionResult ExcluirFornecedorConfirmacao(int id)
+        {
+            FornecedorModel fornecedor = _fornecedorRepositorio.ListarPorId(id);
+            _fornecedorRepositorio.Apagar(fornecedor);
             return RedirectToAction("Fornecedores");
         }
     }

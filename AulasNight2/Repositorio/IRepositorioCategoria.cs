@@ -9,5 +9,6 @@ namespace AulasNight2.Repositorio
         CategoriaModel Adicionar(CategoriaModel categoria);
         CategoriaModel Alterar(CategoriaModel categoria);
         CategoriaModel ListarPorId(int Id);
+        CategoriaModel Apagar(CategoriaModel categoria);
     }
 }
