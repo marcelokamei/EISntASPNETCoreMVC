@@ -11,6 +11,22 @@
 </div>
 <br />
 
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close">X</button>
+        @TempData["Mensagem"]
+    </div>
+}
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close">X</button>
+        @TempData["MensagemErro"]
+    </div>
+}
+
+
 <form asp-controller="GestaoProdutos" asp-route-id="@Model.Id" asp-action="Alterar" method="post">
 
     <div class="form-group">

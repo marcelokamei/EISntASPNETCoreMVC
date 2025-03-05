@@ -1,6 +1,7 @@
 ﻿using AulasNight2.Models;
 using AulasNight2.Repositorio;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace AulasNight2.Controllers
@@ -99,63 +100,118 @@ namespace AulasNight2.Controllers
         [HttpPost]
         public IActionResult Criar(ProdutosModel novoProduto)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _produtoRepositorio.Adicionar(novoProduto);
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _produtoRepositorio.Adicionar(novoProduto);
+                    TempData["Mensagem"] = "Produto cadastrado com sucesso!";
+                    return RedirectToAction("Index");
+                }
+                return View(novoProduto);
             }
-            return View(novoProduto);
-
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível adicionar o produto. Tente Novamente. Erro: {ex.Message}";
+                return View(novoProduto);
+            }
         }
 
         [HttpPost]
         public IActionResult Alterar(ProdutosModel produtoAlterado)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _produtoRepositorio.Alterar(produtoAlterado);
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _produtoRepositorio.Alterar(produtoAlterado);
+                    TempData["Mensagem"] = "Produto alterar com sucesso!";
+
+                    return RedirectToAction("Index");
+                }
+                return View(produtoAlterado);
             }
-            return View(produtoAlterado);
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível alterar o produto. Tente Novamente. Erro: {ex.Message}";
+                return View(produtoAlterado);
+            }
         }
+
         [HttpPost, ActionName("Excluir")]
         [ValidateAntiForgeryToken]
         public IActionResult ExcluirConfirmacao(int id)
         {
-            ProdutosModel produto = _produtoRepositorio.ListarPorId(id);
-            _produtoRepositorio.Apagar(produto);
-            return RedirectToAction("Index");
+            try
+            {
+                ProdutosModel produto = _produtoRepositorio.ListarPorId(id);
+                _produtoRepositorio.Apagar(produto);
+                TempData["Mensagem"] = "Produto excluído com sucesso!";
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível apagar o produto. Tente Novamente. Erro: {ex.Message}";
+                return RedirectToAction("Index");
+            }
         }
 
         //--- MÉTODOS POST CATEGORIAS
         [HttpPost]
         public IActionResult CriarCategoria(CategoriaModel novaCategoria)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _categoriaRepositorio.Adicionar(novaCategoria);
-                return RedirectToAction("Categorias");
+                if (ModelState.IsValid)
+                {
+                    _categoriaRepositorio.Adicionar(novaCategoria);
+                    TempData["Mensagem"] = "Categoria cadastrada com sucesso!";
+                    return RedirectToAction("Categorias");
+                }
+                return View(novaCategoria);
             }
-            return View(novaCategoria);
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível adicionar a categoria. Tente Novamente. Erro: {ex.Message}";
+                return View(novaCategoria);
+            }
         }
         [HttpPost]
         public IActionResult AlterarCategoria(CategoriaModel categoriaAlterada)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _categoriaRepositorio.Alterar(categoriaAlterada);
-                return RedirectToAction("Categorias");
+                if (ModelState.IsValid)
+                {
+                    _categoriaRepositorio.Alterar(categoriaAlterada);
+                    TempData["Mensagem"] = "Categoria alterada com sucesso!";
+                    return RedirectToAction("Categorias");
+                }
+                return View(categoriaAlterada);
             }
-            return View(categoriaAlterada);
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível alterar a categoria. Tente Novamente. Erro: {ex.Message}";
+                return View(categoriaAlterada);
+            }
         }
 
         [HttpPost, ActionName("ExcluirCategoria")]
         [ValidateAntiForgeryToken]
         public IActionResult ExcluirCategoriaConfirmacao(int id)
         {
-            CategoriaModel categoria = _categoriaRepositorio.ListarPorId(id);
-            _categoriaRepositorio.Apagar(categoria);
-            return RedirectToAction("Categorias");
+            try
+            {
+                CategoriaModel categoria = _categoriaRepositorio.ListarPorId(id);
+                _categoriaRepositorio.Apagar(categoria);
+                TempData["Mensagem"] = "Categoria excluída com sucesso!";
+                return RedirectToAction("Categorias");
+            }
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível apagar a categoria. Tente Novamente. Erro: {ex.Message}";
+                return RedirectToAction("Categorias");
+            }
         }
 
 
@@ -163,30 +219,58 @@ namespace AulasNight2.Controllers
         [HttpPost]
         public IActionResult CriarFornecedores(FornecedorModel novoFornecedor)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _fornecedorRepositorio.Adicionar(novoFornecedor);
-                return RedirectToAction("Fornecedores");
+                if (ModelState.IsValid)
+                {
+                    _fornecedorRepositorio.Adicionar(novoFornecedor);
+                    TempData["Mensagem"] = "Fornecedor cadastrado com sucesso!";
+                    return RedirectToAction("Fornecedores");
+                }
+                return View(novoFornecedor);
             }
-            return View(novoFornecedor);
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível adicionar o fornecedor. Tente Novamente. Erro: {ex.Message}";
+                return View(novoFornecedor);
+            }
         }
         [HttpPost]
         public IActionResult AlterarFornecedor(FornecedorModel fornecedorAlterado)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _fornecedorRepositorio.Alterar(fornecedorAlterado);
-                return RedirectToAction("Fornecedores");
+                if (ModelState.IsValid)
+                {
+                    _fornecedorRepositorio.Alterar(fornecedorAlterado);
+                    TempData["Mensagem"] = "Fornecedor alterado com sucesso!";
+                    return RedirectToAction("Fornecedores");
+                }
+                return View(fornecedorAlterado);
             }
-            return View(fornecedorAlterado);
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível alterar o fornecedor. Tente Novamente. Erro: {ex.Message}";
+                return View(fornecedorAlterado);
+            }
         }
         [HttpPost, ActionName("ExcluirFornecedor")]
         [ValidateAntiForgeryToken]
         public IActionResult ExcluirFornecedorConfirmacao(int id)
         {
-            FornecedorModel fornecedor = _fornecedorRepositorio.ListarPorId(id);
-            _fornecedorRepositorio.Apagar(fornecedor);
-            return RedirectToAction("Fornecedores");
+            try
+            {
+                FornecedorModel fornecedor = _fornecedorRepositorio.ListarPorId(id);
+                _fornecedorRepositorio.Apagar(fornecedor);
+                TempData["Mensagem"] = "Fornecedor excluído com sucesso!";
+                return RedirectToAction("Fornecedores");
+            }
+            catch (System.Exception ex)
+            {
+                TempData["MensagemErro"] = $"Ops. Não foi possível apagar o fornecedor. Tente Novamente. Erro: {ex.Message}";
+                return RedirectToAction("Fornecedores");
+            }
         }
     }
 }
+

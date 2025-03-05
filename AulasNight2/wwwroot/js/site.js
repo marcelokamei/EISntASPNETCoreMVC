@@ -4,5 +4,5 @@
 // Write your JavaScript code.
 
 §('.close-alert').click(function () {
-    §('.alert').hide();
+    §('.alert').hide('hide');
 });

@@ -10,17 +10,22 @@
 <br />
 <br />
 
+@if (TempData["Mensagem"] != null)
+{
 <div class="alert alert-success" role="alert">
-	<button type="button" class="btn btn-danger btn close-alert" data-bs-dismiss="alert" arial-label="Close">X</button>
-	This is a success alert—check it out!
+	<button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close">X</button>
+	@TempData["Mensagem"]
 </div>
-<div class="alert alert-danger" role="alert">
-	<button type="button" class="btn btn-danger btn close-alert" data-bs-dismiss="alert" arial-label="Close">X</button>
-
-	This is a danger alert—check it out!
+}
+@if (TempData["MensagemErro"] != null){
+<div class="alert alert-success" role="alert">
+	<button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close">X</button>
+	@TempData["MensagemErro"]
 </div>
+}
 
-<!-- inícion tabela -->
+
+<!-- início tabela -->
 
 <div>
 	<br />
