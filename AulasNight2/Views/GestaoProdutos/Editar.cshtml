@@ -1,11 +1,13 @@
 ﻿@model ProdutosModel
 
 @{
-	ViewData["Title"] = "Editar Produtos";
+    ViewData["Title"] = "Editar Produtos";
+    var categorias = ViewBag.Categorias as List<CategoriaModel>;
+    var fornecedores = ViewBag.Fornecedores as List<FornecedorModel>;
 }
 
 <div class="text-center">
-	<h1 class="display-4">Editar Produtos</h1>
+    <h1 class="display-4">Editar Produtos</h1>
 </div>
 <br />
 
@@ -15,40 +17,64 @@
         <label for="SKU">SKU</label>
         <input readonly type="text" asp-for="Sku" class="form-control" placeholder="Insira o SKU do produto">
     </div>
-	<div class="form-group">
-		<label for="Produto">Produto</label>
-		<input type="text" asp-for="Produto" class="form-control" placeholder="Insira o nome do produto">
-		@Html.ValidationMessageFor(x => x.Produto)
-	</div>
-	<div class="form-group">
-		<label for="Descricao">Descrição</label>
-		<input type="text" asp-for="Descricao" class="form-control" placeholder="Insira a descrição do produto">
-		@Html.ValidationMessageFor(x => x.Descricao)
-	</div>
-	<div class="form-group">
-		<label for="Categoria">Categoria</label>
-		<input type="number" asp-for="Categoria" class="form-control" placeholder="Insira o categoria do produto">
-		@Html.ValidationMessageFor(x => x.Categoria)
-	</div>
-	<div class="form-group">
-		<label for="Fornecedor">Fornecedor</label>
-		<input type="number" asp-for="Fornecedor" class="form-control" placeholder="Insira o fornecedor do produto">
-		@Html.ValidationMessageFor(x => x.Fornecedor)
-	</div>
+    <div class="form-group">
+        <label for="Produto">Produto</label>
+        <input type="text" asp-for="Produto" class="form-control" placeholder="Insira o nome do produto">
+        @Html.ValidationMessageFor(x => x.Produto)
+    </div>
+    <div class="form-group">
+        <label for="Descricao">Descrição</label>
+        <input type="text" asp-for="Descricao" class="form-control" placeholder="Insira a descrição do produto">
+        @Html.ValidationMessageFor(x => x.Descricao)
+    </div>
+    <div class="form-group">
+        <label for="Categoria">Categoria</label>
+        <select asp-for="Categoria" class="form-control">
+            <option value="">Selecione a categoria</option>
+            @if (categorias != null)
+            {
+                @foreach (var categoria in categorias)
+                {
+                    <option value="@categoria.Id">@categoria.Nome</option>
+                }
+            }
+        </select>
+        @Html.ValidationMessageFor(x => x.Categoria)
+    </div>
+    <div class="form-group">
+        <label for="Fornecedor">Fornecedor</label>
+        <select asp-for="Fornecedor" class="form-control">
+            <option value="">Selecione o fornecedor</option>
+            @if (fornecedores != null)
+            {
+                @foreach (var fornecedor in fornecedores)
+                {
+                    <option value="@fornecedor.Id">@fornecedor.Nome</option>
+                }
+            }
+        </select>
+        @Html.ValidationMessageFor(x => x.Fornecedor)
+    </div>
 
-	<div class="form-group">
-		<label for="Quantidade">Quantidade</label>
-		<input type="number" asp-for="Qtd" class="form-control" placeholder="Insira a categoria do produto">
-		@Html.ValidationMessageFor(x => x.Qtd)
-	</div>
-	<div class="form-group">
-		<label for="Preco">Preço unitário</label>
-		<input type="number" asp-for="PrecoUnit" class="form-control" placeholder="Insira o preço do produto" step="0,01">
-		@Html.ValidationMessageFor(x => x.PrecoUnit)
-	</div>
+    <div class="form-group">
+        <label for="Quantidade">Quantidade</label>
+        <input type="number" asp-for="Qtd" class="form-control" placeholder="Insira a quantidade do produto">
+        @Html.ValidationMessageFor(x => x.Qtd)
+    </div>
+    <div class="form-group">
+        <label for="Preco">Preço unitário</label>
+        <input type="number" asp-for="PrecoUnit" class="form-control" placeholder="Insira o preço do produto" step="0.01">
+        @Html.ValidationMessageFor(x => x.PrecoUnit)
+    </div>
 
     <br />
     <button type="submit" class="btn btn-secondary">Alterar</button>
     <a class="btn btn-primary" asp-controller="GestaoProdutos" asp-action="Index" role="button">Voltar</a>
 
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

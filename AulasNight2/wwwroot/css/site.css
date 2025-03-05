@@ -28,3 +28,11 @@ body {
 .field-validation-error{
     color: darkred;
 }
+.close-alert {
+    position: absolute;
+    right: -10px;
+    top: -15px;
+    border-radius: 30px;
+    width: 30px;
+    height: 31px;
+}}

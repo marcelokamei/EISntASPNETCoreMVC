@@ -2,6 +2,8 @@
 
 @{
 	ViewData["Title"] = "Criar Produtos";
+	var categorias = ViewBag.Categorias as List<CategoriaModel>;
+	var fornecedores = ViewBag.Fornecedores as List<FornecedorModel>;
 }
 
 <div class="text-center">
@@ -12,7 +14,7 @@
 <form asp-controller="GestaoProdutos" asp-action="Criar" method="post">
 	<div class="form-group">
 		<label for="SKU">SKU</label>
-		<input type="number" asp-for="Sku" class="form-control" placeholder="Insira o SKU do produto">
+		<input type="text" asp-for="Sku" class="form-control" placeholder="Insira o SKU do produto">
 		@Html.ValidationMessageFor(x => x.Sku)
 	</div>
 	<div class="form-group">
@@ -27,12 +29,24 @@
 	</div>
 	<div class="form-group">
 		<label for="Categoria">Categoria</label>
-		<input type="number" asp-for="Categoria" class="form-control" placeholder="Insira o categoria do produto">
+		<select asp-for="Categoria" class="form-control">
+			<option value="">Selecione a categoria</option>
+			@foreach (var categoria in categorias)
+			{
+				<option value="@categoria.Id">@categoria.Nome</option>
+			}
+		</select>
 		@Html.ValidationMessageFor(x => x.Categoria)
 	</div>
 	<div class="form-group">
 		<label for="Fornecedor">Fornecedor</label>
-		<input type="number" asp-for="Fornecedor" class="form-control" placeholder="Insira o fornecedor do produto">
+		<select asp-for="Fornecedor" class="form-control">
+			<option value="">Selecione o fornecedor</option>
+			@foreach (var fornecedor in fornecedores)
+			{
+				<option value="@fornecedor.Id">@fornecedor.Nome</option>
+			}
+		</select>
 		@Html.ValidationMessageFor(x => x.Fornecedor)
 	</div>
 

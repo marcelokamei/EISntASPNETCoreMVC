@@ -28,12 +28,17 @@ namespace AulasNight2.Controllers
 
         public IActionResult Criar()
         {
+            ViewBag.Categorias = _categoriaRepositorio.ObterTodasCategoria();
+            ViewBag.Fornecedores = _fornecedorRepositorio.ObterTodosFornecedores();
             return View();
         }
 
         public IActionResult Editar(int Id)
         {
             ProdutosModel produto = _produtoRepositorio.ListarPorId(Id);
+            ViewBag.Categorias = _categoriaRepositorio.ObterTodasCategoria();
+            ViewBag.Fornecedores = _fornecedorRepositorio.ObterTodosFornecedores();
+
             return View(produto);
         }
 

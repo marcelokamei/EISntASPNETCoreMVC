@@ -26,7 +26,7 @@ namespace AulasNight2.Models
         public int Categoria { get; set; }
 
         [Required(ErrorMessage = "Insira o preço do produto")]
-        [Range(0, double.MaxValue, ErrorMessage = "O preço deve ser maior ou igual a zero.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "O preço deve ser maior ou igual a zero.")]
         [DataType(DataType.Currency)]
         public decimal PrecoUnit { get; set; }
 
