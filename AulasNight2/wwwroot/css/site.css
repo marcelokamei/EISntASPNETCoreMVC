@@ -24,3 +24,7 @@ body {
 .btn-secondary{
     background-color:darkgreen;
 }
+
+.field-validation-error{
+    color: darkred;
+}

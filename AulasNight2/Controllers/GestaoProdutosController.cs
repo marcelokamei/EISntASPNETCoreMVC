@@ -94,15 +94,24 @@ namespace AulasNight2.Controllers
         [HttpPost]
         public IActionResult Criar(ProdutosModel novoProduto)
         {
-            _produtoRepositorio.Adicionar(novoProduto);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _produtoRepositorio.Adicionar(novoProduto);
+                return RedirectToAction("Index");
+            }
+            return View(novoProduto);
+
         }
 
         [HttpPost]
         public IActionResult Alterar(ProdutosModel produtoAlterado)
         {
-            _produtoRepositorio.Alterar(produtoAlterado);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _produtoRepositorio.Alterar(produtoAlterado);
+                return RedirectToAction("Index");
+            }
+            return View(produtoAlterado);
         }
         [HttpPost, ActionName("Excluir")]
         [ValidateAntiForgeryToken]
@@ -117,14 +126,22 @@ namespace AulasNight2.Controllers
         [HttpPost]
         public IActionResult CriarCategoria(CategoriaModel novaCategoria)
         {
-            _categoriaRepositorio.Adicionar(novaCategoria);
-            return RedirectToAction("Categorias");
+            if (ModelState.IsValid)
+            {
+                _categoriaRepositorio.Adicionar(novaCategoria);
+                return RedirectToAction("Categorias");
+            }
+            return View(novaCategoria);
         }
         [HttpPost]
         public IActionResult AlterarCategoria(CategoriaModel categoriaAlterada)
         {
-            _categoriaRepositorio.Alterar(categoriaAlterada);
-            return RedirectToAction("Categorias");
+            if (ModelState.IsValid)
+            {
+                _categoriaRepositorio.Alterar(categoriaAlterada);
+                return RedirectToAction("Categorias");
+            }
+            return View(categoriaAlterada);
         }
 
         [HttpPost, ActionName("ExcluirCategoria")]
@@ -141,14 +158,22 @@ namespace AulasNight2.Controllers
         [HttpPost]
         public IActionResult CriarFornecedores(FornecedorModel novoFornecedor)
         {
-            _fornecedorRepositorio.Adicionar(novoFornecedor);
-            return RedirectToAction("Fornecedores");
+            if (ModelState.IsValid)
+            {
+                _fornecedorRepositorio.Adicionar(novoFornecedor);
+                return RedirectToAction("Fornecedores");
+            }
+            return View(novoFornecedor);
         }
         [HttpPost]
         public IActionResult AlterarFornecedor(FornecedorModel fornecedorAlterado)
         {
-            _fornecedorRepositorio.Alterar(fornecedorAlterado);
-            return RedirectToAction("Fornecedores");
+            if (ModelState.IsValid)
+            {
+                _fornecedorRepositorio.Alterar(fornecedorAlterado);
+                return RedirectToAction("Fornecedores");
+            }
+            return View(fornecedorAlterado);
         }
         [HttpPost, ActionName("ExcluirFornecedor")]
         [ValidateAntiForgeryToken]
