@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,7 @@
                     <ul class="navbar-nav flex-grow-1">
                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="GestaoProdutos" asp-action="Index">Gestão de Produtos</a>
+                            <a class="nav-link text-dark" id="btnGestaoProdutos" asp-area="" asp-controller="GestaoProdutos" asp-action="Index">Gestão de Produtos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Contactos" asp-action="Index">Contactos</a>
@@ -42,9 +42,121 @@
             &copy; 2025 - Asp.Net Core MVC - EISnt
         </div>
     </footer>
+
+    <!-- Modal de Verificação de Credenciais -->
+    <div class="modal fade" id="verificacaoModal" tabindex="-1" aria-labelledby="verificacaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verificacaoModalLabel">Autenticação Necessária</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAutenticacao">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Utilizador</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Palavra-passe</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </form>
+                    <div id="authError" class="text-danger mt-2" style="display: none;">Credenciais inválidas!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Script do modal de verificacao -->
+    <script>
+        $(document).ready(function () {
+            // Define o tempo de expiração da sessão em milissegundos (por exemplo, 30 minutos)
+            var sessionTimeout = 2 * 60 * 1000;
+
+            // Verifica se o usuário já foi autenticado e se a sessão não expirou
+            var isAuthenticated = sessionStorage.getItem('isAuthenticated');
+            var authTimestamp = sessionStorage.getItem('authTimestamp');
+            var currentTime = new Date().getTime();
+
+            if (!isAuthenticated || (currentTime - authTimestamp > sessionTimeout)) {
+                // Abre o modal automaticamente ao carregar a página
+                $("#verificacaoModal").modal('show');
+            }
+
+            // Quando o formulário for submetido
+            $("#formAutenticacao").submit(function (e) {
+                e.preventDefault(); // Impede o comportamento padrão do formulário
+
+                var username = $("#username").val(); // Obtém o nome de utilizador
+                var password = $("#password").val(); // Obtém a palavra-passe
+
+                // Envia os dados para o controlador em ASP.NET MVC
+                $.ajax({
+                    url: '@Url.Action("VerificarCredenciais", "Autenticacao")',
+                    type: 'POST',
+                    data: { username: username, password: password },
+                    success: function (response) {
+                        if (response.success) {
+                            // Armazena a informação de autenticação no sessionStorage com um timestamp
+                            sessionStorage.setItem('isAuthenticated', 'true');
+                            sessionStorage.setItem('authTimestamp', new Date().getTime());
+                            window.location.href = '@Url.Action("Index", "GestaoProdutos")'; // Redireciona para a página desejada
+                        } else {
+                            $("#authError").show(); // Mostra a mensagem de erro
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+@* 
+    <!-- Script do modal de verificacao -->
+    <script>
+        $(document).ready(function () {
+            // Abre o modal automaticamente ao carregar a página
+            $("#verificacaoModal").modal('show');
+
+            // Quando o botão "Gestão de Stock" for clicado, abre o modal
+            $("#btnGestaoProdutos").click(function (e) {
+                e.preventDefault(); // Impede que o link recarregue a página
+                $("#verificacaoModal").modal('show'); // Abre o modal
+            });
+
+            // Quando o formulário for submetido
+            $("#formAutenticacao").submit(function (e) {
+                e.preventDefault(); // Impede o comportamento padrão do formulário
+
+                var username = $("#username").val(); // Obtém o nome de utilizador
+                var password = $("#password").val(); // Obtém a palavra-passe
+            
+                // Envia os dados para o controlador em ASP.NET MVC
+                $.ajax({
+                    url: '@Url.Action("VerificarCredenciais", "Autenticacao")',
+                    type: 'POST',
+                    data: { username: username, password: password },
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = '@Url.Action("Index", "GestaoProdutos")'; // Redireciona para a página desejada
+                        } else {
+                            $("#authError").show(); // Mostra a mensagem de erro
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+ *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
